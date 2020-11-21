@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -90,6 +91,41 @@ namespace WindowsRegistryApp
                 TreeNode node = new TreeNode() { Name = "node", Text = subKey };
                 treeView.FindNodeByName(treeView_registryKeys.Nodes[0], "HKEY_CURRENT_CONFIG").Nodes.Add(node);
             }
+        }
+
+        ArrayList path = new ArrayList();
+        String textbox_path_str;
+
+        private void treeView_registryKeys_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            TreeNode tempNode = treeView_registryKeys.SelectedNode;
+
+            path.Clear();
+
+            for (int i = 0; i < 100; i++)
+            {
+                path.Add(tempNode.Text);
+
+                if (tempNode.Parent == null)
+                {
+                    break;
+                }
+                else
+                {
+                    tempNode = tempNode.Parent;
+                }
+            }
+
+            textbox_path_str = "";
+
+            path.Reverse();
+
+            foreach (String tn in path)
+            {
+                textbox_path_str += "/ " + tn;
+            }
+
+            textBox_path.Text = textbox_path_str;
         }
     }
 }

@@ -46,11 +46,12 @@ namespace WindowsRegistryApp
             this.treeView_registryKeys.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.treeView_registryKeys.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.treeView_registryKeys.Location = new System.Drawing.Point(0, 52);
+            this.treeView_registryKeys.Location = new System.Drawing.Point(0, 48);
             this.treeView_registryKeys.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.treeView_registryKeys.Name = "treeView_registryKeys";
-            this.treeView_registryKeys.Size = new System.Drawing.Size(270, 646);
+            this.treeView_registryKeys.Size = new System.Drawing.Size(270, 650);
             this.treeView_registryKeys.TabIndex = 0;
+            this.treeView_registryKeys.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView_registryKeys_AfterSelect);
             // 
             // menuStrip
             // 
@@ -87,9 +88,8 @@ namespace WindowsRegistryApp
             this.textBox_path.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBox_path.Location = new System.Drawing.Point(0, 27);
             this.textBox_path.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.textBox_path.Multiline = true;
             this.textBox_path.Name = "textBox_path";
-            this.textBox_path.Size = new System.Drawing.Size(1102, 27);
+            this.textBox_path.Size = new System.Drawing.Size(1102, 22);
             this.textBox_path.TabIndex = 2;
             // 
             // listView1
@@ -103,10 +103,10 @@ namespace WindowsRegistryApp
             this.columnHeader_type,
             this.columnHeader_value});
             this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(275, 53);
+            this.listView1.Location = new System.Drawing.Point(275, 48);
             this.listView1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(826, 645);
+            this.listView1.Size = new System.Drawing.Size(826, 650);
             this.listView1.TabIndex = 3;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
