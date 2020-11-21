@@ -21,5 +21,12 @@ namespace WindowsRegistryApp
         {
             Application.Exit();
         }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            // filling treeView with keys
+
+            
+        }
     }
 }
