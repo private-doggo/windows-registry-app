@@ -41,6 +41,9 @@ namespace WindowsRegistryApp
 
         public void updateRegKeys()
         {
+            //listView_regParData.Items.Clear();
+            treeView_registryKeys.Nodes.Clear();
+
             // parsing registry keys & filling treeView with 'em
 
             treeView_registryKeys.Nodes.Add(new TreeNode("Computer"));
@@ -210,8 +213,17 @@ namespace WindowsRegistryApp
             if (currentRegKey != null)
             {
                 sectionCreationForm sectionCreation = new sectionCreationForm();
+
                 sectionCreation.ShowDialog();
-                RegistryKey newRegKey = currentRegKey.CreateSubKey(Data.newRegKeyName);
+                try
+                {
+                    RegistryKey newRegKey = currentRegKey.CreateSubKey(Data.newRegKeyName);
+                }
+                catch
+                {
+                    MessageBox.Show("Can't be proceed");
+                }
+                // добавить еще тип ключа (в виде дропбокса) и значение
             }
             else
             {
@@ -222,6 +234,30 @@ namespace WindowsRegistryApp
         private void updateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             updateRegKeys();
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RegistryKey currentRegKey = Reg.GetRegistryKeyByName(treeView_registryKeys.SelectedNode.Text, regKeysList);
+
+            if (currentRegKey != null)
+            {
+                // удаление параметра
+                /*currentRegKey.DeleteValue("key1", false); // in case key doesn't exit an exeption won't appear
+                currentRegKey.Close();*/
+                RegistryKey currentRegKeyParent = Reg.GetRegistryKeyByName(treeView_registryKeys.SelectedNode.Parent.Text, regKeysList);
+
+                currentRegKey.Close();
+                currentRegKeyParent.DeleteSubKeyTree(treeView_registryKeys.SelectedNode.Text);
+
+                /*treeView_registryKeys.SelectedNode.Nodes.Clear();
+
+                treeView_registryKeys.SelectedNode = treeView_registryKeys.SelectedNode.Parent; */               
+            }
+            else
+            {
+                MessageBox.Show("It's not possible to delete this key");
+            }
         }
 
         /*private void textBox_path_KeyPress(object sender, EventArgs e)

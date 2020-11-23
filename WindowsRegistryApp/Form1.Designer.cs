@@ -34,6 +34,8 @@ namespace WindowsRegistryApp
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.updateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textBox_path = new System.Windows.Forms.TextBox();
             this.listView_regParData = new System.Windows.Forms.ListView();
             this.columnHeader_name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -43,10 +45,11 @@ namespace WindowsRegistryApp
             this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.updateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStrip_deleteKey = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.contextMenuStrip_regAdd.SuspendLayout();
+            this.contextMenuStrip_deleteKey.SuspendLayout();
             this.SuspendLayout();
             // 
             // treeView_registryKeys
@@ -54,6 +57,7 @@ namespace WindowsRegistryApp
             this.treeView_registryKeys.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.treeView_registryKeys.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.treeView_registryKeys.ContextMenuStrip = this.contextMenuStrip_deleteKey;
             this.treeView_registryKeys.Location = new System.Drawing.Point(0, 48);
             this.treeView_registryKeys.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.treeView_registryKeys.Name = "treeView_registryKeys";
@@ -89,6 +93,21 @@ namespace WindowsRegistryApp
             this.closeToolStripMenuItem.Size = new System.Drawing.Size(128, 26);
             this.closeToolStripMenuItem.Text = "Close";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
+            // 
+            // viewToolStripMenuItem
+            // 
+            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.updateToolStripMenuItem});
+            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(55, 24);
+            this.viewToolStripMenuItem.Text = "View";
+            // 
+            // updateToolStripMenuItem
+            // 
+            this.updateToolStripMenuItem.Name = "updateToolStripMenuItem";
+            this.updateToolStripMenuItem.Size = new System.Drawing.Size(141, 26);
+            this.updateToolStripMenuItem.Text = "Update";
+            this.updateToolStripMenuItem.Click += new System.EventHandler(this.updateToolStripMenuItem_Click);
             // 
             // textBox_path
             // 
@@ -150,35 +169,35 @@ namespace WindowsRegistryApp
             this.sectionToolStripMenuItem,
             this.toolStripSeparator1});
             this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(121, 24);
             this.addToolStripMenuItem.Text = "Create";
             // 
             // sectionToolStripMenuItem
             // 
             this.sectionToolStripMenuItem.Name = "sectionToolStripMenuItem";
-            this.sectionToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.sectionToolStripMenuItem.Size = new System.Drawing.Size(141, 26);
             this.sectionToolStripMenuItem.Text = "Section";
             this.sectionToolStripMenuItem.Click += new System.EventHandler(this.sectionToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(221, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(138, 6);
             // 
-            // viewToolStripMenuItem
+            // contextMenuStrip_deleteKey
             // 
-            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.updateToolStripMenuItem});
-            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            this.viewToolStripMenuItem.Size = new System.Drawing.Size(55, 24);
-            this.viewToolStripMenuItem.Text = "View";
+            this.contextMenuStrip_deleteKey.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.contextMenuStrip_deleteKey.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.deleteToolStripMenuItem});
+            this.contextMenuStrip_deleteKey.Name = "contextMenuStrip_deleteKey";
+            this.contextMenuStrip_deleteKey.Size = new System.Drawing.Size(123, 28);
             // 
-            // updateToolStripMenuItem
+            // deleteToolStripMenuItem
             // 
-            this.updateToolStripMenuItem.Name = "updateToolStripMenuItem";
-            this.updateToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.updateToolStripMenuItem.Text = "Update";
-            this.updateToolStripMenuItem.Click += new System.EventHandler(this.updateToolStripMenuItem_Click);
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
+            this.deleteToolStripMenuItem.Text = "Delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -197,6 +216,7 @@ namespace WindowsRegistryApp
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.contextMenuStrip_regAdd.ResumeLayout(false);
+            this.contextMenuStrip_deleteKey.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -219,6 +239,8 @@ namespace WindowsRegistryApp
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem updateToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip_deleteKey;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
     }
 }
 
