@@ -34,7 +34,7 @@ namespace WindowsRegistryApp
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textBox_path = new System.Windows.Forms.TextBox();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.listView_regParData = new System.Windows.Forms.ListView();
             this.columnHeader_name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader_type = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader_value = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -62,7 +62,7 @@ namespace WindowsRegistryApp
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-            this.menuStrip.Size = new System.Drawing.Size(1101, 28);
+            this.menuStrip.Size = new System.Drawing.Size(1182, 28);
             this.menuStrip.TabIndex = 1;
             this.menuStrip.Text = "menuStrip";
             // 
@@ -89,27 +89,27 @@ namespace WindowsRegistryApp
             this.textBox_path.Location = new System.Drawing.Point(0, 27);
             this.textBox_path.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox_path.Name = "textBox_path";
-            this.textBox_path.Size = new System.Drawing.Size(1102, 22);
+            this.textBox_path.Size = new System.Drawing.Size(1183, 22);
             this.textBox_path.TabIndex = 2;
             // 
-            // listView1
+            // listView_regParData
             // 
-            this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.listView_regParData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.listView1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.listView_regParData.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.listView_regParData.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader_name,
             this.columnHeader_type,
             this.columnHeader_value});
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(275, 48);
-            this.listView1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(826, 650);
-            this.listView1.TabIndex = 3;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
+            this.listView_regParData.HideSelection = false;
+            this.listView_regParData.Location = new System.Drawing.Point(275, 48);
+            this.listView_regParData.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.listView_regParData.Name = "listView_regParData";
+            this.listView_regParData.Size = new System.Drawing.Size(907, 650);
+            this.listView_regParData.TabIndex = 3;
+            this.listView_regParData.UseCompatibleStateImageBehavior = false;
+            this.listView_regParData.View = System.Windows.Forms.View.Details;
             // 
             // columnHeader_name
             // 
@@ -130,8 +130,8 @@ namespace WindowsRegistryApp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1101, 693);
-            this.Controls.Add(this.listView1);
+            this.ClientSize = new System.Drawing.Size(1182, 693);
+            this.Controls.Add(this.listView_regParData);
             this.Controls.Add(this.textBox_path);
             this.Controls.Add(this.treeView_registryKeys);
             this.Controls.Add(this.menuStrip);
@@ -152,7 +152,7 @@ namespace WindowsRegistryApp
         private System.Windows.Forms.TreeView treeView_registryKeys;
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.TextBox textBox_path;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ListView listView_regParData;
         private System.Windows.Forms.ColumnHeader columnHeader_name;
         private System.Windows.Forms.ColumnHeader columnHeader_type;
         private System.Windows.Forms.ColumnHeader columnHeader_value;

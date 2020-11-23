@@ -24,6 +24,8 @@ namespace WindowsRegistryApp
             Application.Exit();
         }
 
+        ArrayList registries = new ArrayList();
+
         private void MainForm_Load(object sender, EventArgs e)
         {
             // nodes images adding
@@ -49,13 +51,15 @@ namespace WindowsRegistryApp
             {
                 TreeNode node = new TreeNode() { Name = "key", Text = key.ToString() };
                 treeView.FindNodeByName(treeView_registryKeys.Nodes[0], "Computer").Nodes.Add(node);
+
+                registries.Add(key);
             }
 
             treeView.FindNodeByName(treeView_registryKeys.Nodes[0], "Computer").Expand();
 
             foreach (RegistryKey key in regKeyArray)
             {
-                foreach (String subKey in key.GetSubKeyNames())
+                foreach (string subKey in key.GetSubKeyNames())
                 {
                     TreeNode subNode = new TreeNode() { Name = "key", Text = subKey };
                     treeView.FindNodeByName(treeView_registryKeys.Nodes[0], key.ToString()).Nodes.Add(subNode);
@@ -64,28 +68,35 @@ namespace WindowsRegistryApp
                     {
                         RegistryKey subKeyOpened = key.OpenSubKey(subKey);
 
-                        foreach (String subSubKey in subKeyOpened.GetSubKeyNames())
+                        registries.Add(subKeyOpened);
+
+                        foreach (string subSubKey in subKeyOpened.GetSubKeyNames())
                         {
                             TreeNode subSubNode = new TreeNode() { Name = "key", Text = subSubKey };
                             treeView.FindNodeByName(treeView_registryKeys.Nodes[0], subKey).Nodes.Add(subSubNode);
 
-                            RegistryKey subSubKeyOpened = key.OpenSubKey(subKey + @"\" + subSubKey);
+                            RegistryKey subSubKeyOpened = subKeyOpened.OpenSubKey(subSubKey);
 
-                            foreach (String subSubSubKey in subSubKeyOpened.GetSubKeyNames())
+                            registries.Add(subSubKeyOpened);
+
+                            foreach (string subSubSubKey in subSubKeyOpened.GetSubKeyNames())
                             {
                                 TreeNode subSubSubNode = new TreeNode() { Name = "key", Text = subSubSubKey };
                                 treeView.FindNodeByName(treeView_registryKeys.Nodes[0], subSubKey).Nodes.Add(subSubSubNode);
 
-                                RegistryKey subSubSubKeyOpened = key.OpenSubKey(subKey + @"\" + subSubKey + @"\" + subSubSubKey);
+                                RegistryKey subSubSubKeyOpened = subSubKeyOpened.OpenSubKey(subSubSubKey);
 
-                                foreach (String subSubSubSubKey in subSubSubKeyOpened.GetSubKeyNames())
+                                registries.Add(subSubSubKeyOpened);
+
+                                /*
+                                foreach (string subSubSubSubKey in subSubSubKeyOpened.GetSubKeyNames())
                                 {
                                     TreeNode subSubSubSubNode = new TreeNode() { Name = "key", Text = subSubSubSubKey };
                                     treeView.FindNodeByName(treeView_registryKeys.Nodes[0], subSubSubKey).Nodes.Add(subSubSubSubNode);
 
-                                    RegistryKey subSubSubSubKeyOpened = key.OpenSubKey(subKey + @"\" + subSubKey + @"\" + subSubSubKey + @"\" + subSubSubSubKey);
+                                    RegistryKey subSubSubSubKeyOpened = subSubSubKeyOpened.OpenSubKey(subSubSubSubKey);
 
-                                    foreach (String subSubSubSubSubKey in subSubSubSubKeyOpened.GetSubKeyNames())
+                                    foreach (string subSubSubSubSubKey in subSubSubSubKeyOpened.GetSubKeyNames())
                                     {
                                         TreeNode subSubSubSubSubNode = new TreeNode() { Name = "key", Text = subSubSubSubKey };
                                         treeView.FindNodeByName(treeView_registryKeys.Nodes[0], subSubSubSubKey).Nodes.Add(subSubSubSubSubNode);
@@ -94,13 +105,9 @@ namespace WindowsRegistryApp
                                     }
 
                                     key.Close();
-
-                                    break;
                                 }
 
-                                key.Close();
-
-                                break;
+                                key.Close();*/
                             }
 
                             key.Close();
@@ -115,7 +122,7 @@ namespace WindowsRegistryApp
         }
 
         ArrayList path = new ArrayList();
-        String textbox_path_str;
+        string textbox_path_str;
 
         private void treeView_registryKeys_AfterSelect(object sender, TreeViewEventArgs e)
         {
@@ -143,7 +150,7 @@ namespace WindowsRegistryApp
 
             path.Reverse();
 
-            foreach (String tn in path)
+            foreach (string tn in path)
             {
                 textbox_path_str += tn + @"\";
             }
@@ -152,7 +159,47 @@ namespace WindowsRegistryApp
 
             // showing name, type and value of selected key
 
+            listView_regParData.Items.Clear();
+            String parName;
+            RegistryKey currentRegKey = GetRegistryKeyByName(treeView_registryKeys.SelectedNode.Text, regKeysList);
 
+            if (currentRegKey != null)
+            {
+                try
+                {
+                    foreach (string valueName in currentRegKey.GetValueNames())
+                    {
+                        if (valueName == null || valueName == "")
+                        {
+                            parName = "Default";
+                        }
+                        else
+                        {
+                            parName = valueName;
+                        }
+
+                        var parData = new string[] { parName, currentRegKey.GetValueKind(valueName).ToString(), currentRegKey.GetValue(valueName).ToString() };
+
+                        var lvi = new ListViewItem(parData);
+                        listView_regParData.Items.Add(lvi);
+                    }
+                }
+                catch { }
+            }
+
+        }
+
+        public RegistryKey GetRegistryKeyByName(string regKeyName, ArrayList regKeysList)
+        {
+            foreach (RegistryKey rk in regKeysList)
+            {
+                if (rk.ToString().Contains(regKeyName))
+                {
+                    return rk;
+                }
+            }
+
+            return null;
         }
     }
 }
