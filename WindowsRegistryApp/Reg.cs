@@ -34,5 +34,6 @@ namespace WindowsRegistryApp
             REG_MULTI_SZ = 7,
             REG_QWORD = 11
         }
+
     }
 }

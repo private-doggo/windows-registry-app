@@ -18,7 +18,6 @@ namespace WindowsRegistryApp
         public MainForm()
         {
             InitializeComponent();
-
         }
 
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -36,7 +35,13 @@ namespace WindowsRegistryApp
             regImageList.Images.Add(Image.FromFile(@"img/folder.png"));
             treeView_registryKeys.ImageList = regImageList;
 
-            // filling treeView with keys
+            updateRegKeys();
+
+        }
+
+        public void updateRegKeys()
+        {
+            // parsing registry keys & filling treeView with 'em
 
             treeView_registryKeys.Nodes.Add(new TreeNode("Computer"));
 
@@ -120,7 +125,6 @@ namespace WindowsRegistryApp
                     catch { }
                 }
             }
-
         }
 
         ArrayList path = new ArrayList();
@@ -199,20 +203,26 @@ namespace WindowsRegistryApp
 
         }
 
-        private void разделToolStripMenuItem_Click(object sender, EventArgs e)
+        private void sectionToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            RegistryKey currentRegKey = Reg.GetRegistryKeyByName(treeView_registryKeys.SelectedNode.Text, regKeysList);
 
+            if (currentRegKey != null)
+            {
+                sectionCreationForm sectionCreation = new sectionCreationForm();
+                sectionCreation.ShowDialog();
+                RegistryKey newRegKey = currentRegKey.CreateSubKey(Data.newRegKeyName);
+            }
+            else
+            {
+                MessageBox.Show("It's not possible to create new sections here");
+            }
         }
 
-        /*private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
+        private void updateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
-        }*/
-
-        /*private void textBox_path_TextChanged(object sender, EventArgs e)
-        {
-
-        }*/
+            updateRegKeys();
+        }
 
         /*private void textBox_path_KeyPress(object sender, EventArgs e)
         {
