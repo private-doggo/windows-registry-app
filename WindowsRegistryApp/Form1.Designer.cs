@@ -29,6 +29,7 @@ namespace WindowsRegistryApp
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.treeView_registryKeys = new System.Windows.Forms.TreeView();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -38,7 +39,12 @@ namespace WindowsRegistryApp
             this.columnHeader_name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader_type = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader_value = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.contextMenuStrip_regAdd = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip.SuspendLayout();
+            this.contextMenuStrip_regAdd.SuspendLayout();
             this.SuspendLayout();
             // 
             // treeView_registryKeys
@@ -102,6 +108,7 @@ namespace WindowsRegistryApp
             this.columnHeader_name,
             this.columnHeader_type,
             this.columnHeader_value});
+            this.listView_regParData.ContextMenuStrip = this.contextMenuStrip_regAdd;
             this.listView_regParData.HideSelection = false;
             this.listView_regParData.Location = new System.Drawing.Point(275, 48);
             this.listView_regParData.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -114,17 +121,45 @@ namespace WindowsRegistryApp
             // columnHeader_name
             // 
             this.columnHeader_name.Text = "Name";
-            this.columnHeader_name.Width = 150;
+            this.columnHeader_name.Width = 200;
             // 
             // columnHeader_type
             // 
             this.columnHeader_type.Text = "Type";
-            this.columnHeader_type.Width = 150;
+            this.columnHeader_type.Width = 200;
             // 
             // columnHeader_value
             // 
             this.columnHeader_value.Text = "Value";
             this.columnHeader_value.Width = 360;
+            // 
+            // contextMenuStrip_regAdd
+            // 
+            this.contextMenuStrip_regAdd.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.contextMenuStrip_regAdd.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addToolStripMenuItem});
+            this.contextMenuStrip_regAdd.Name = "contextMenuStrip_regAdd";
+            this.contextMenuStrip_regAdd.Size = new System.Drawing.Size(122, 28);
+            // 
+            // addToolStripMenuItem
+            // 
+            this.addToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.sectionToolStripMenuItem,
+            this.toolStripSeparator1});
+            this.addToolStripMenuItem.Name = "addToolStripMenuItem";
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(121, 24);
+            this.addToolStripMenuItem.Text = "Create";
+            // 
+            // sectionToolStripMenuItem
+            // 
+            this.sectionToolStripMenuItem.Name = "sectionToolStripMenuItem";
+            this.sectionToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.sectionToolStripMenuItem.Text = "Section";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(221, 6);
             // 
             // MainForm
             // 
@@ -142,6 +177,7 @@ namespace WindowsRegistryApp
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
+            this.contextMenuStrip_regAdd.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -158,6 +194,10 @@ namespace WindowsRegistryApp
         private System.Windows.Forms.ColumnHeader columnHeader_value;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip_regAdd;
+        private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sectionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }
 

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static WindowsRegistryApp.Reg;
 
 namespace WindowsRegistryApp
 {
@@ -17,6 +18,7 @@ namespace WindowsRegistryApp
         public MainForm()
         {
             InitializeComponent();
+
         }
 
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -24,12 +26,12 @@ namespace WindowsRegistryApp
             Application.Exit();
         }
 
-        ArrayList registries = new ArrayList();
+        ArrayList regKeysList = new ArrayList();
 
         private void MainForm_Load(object sender, EventArgs e)
         {
             // nodes images adding
-
+            
             ImageList regImageList = new ImageList();
             regImageList.Images.Add(Image.FromFile(@"img/folder.png"));
             treeView_registryKeys.ImageList = regImageList;
@@ -52,7 +54,7 @@ namespace WindowsRegistryApp
                 TreeNode node = new TreeNode() { Name = "key", Text = key.ToString() };
                 treeView.FindNodeByName(treeView_registryKeys.Nodes[0], "Computer").Nodes.Add(node);
 
-                registries.Add(key);
+                regKeysList.Add(key);
             }
 
             treeView.FindNodeByName(treeView_registryKeys.Nodes[0], "Computer").Expand();
@@ -68,7 +70,7 @@ namespace WindowsRegistryApp
                     {
                         RegistryKey subKeyOpened = key.OpenSubKey(subKey);
 
-                        registries.Add(subKeyOpened);
+                        regKeysList.Add(subKeyOpened);
 
                         foreach (string subSubKey in subKeyOpened.GetSubKeyNames())
                         {
@@ -77,7 +79,7 @@ namespace WindowsRegistryApp
 
                             RegistryKey subSubKeyOpened = subKeyOpened.OpenSubKey(subSubKey);
 
-                            registries.Add(subSubKeyOpened);
+                            regKeysList.Add(subSubKeyOpened);
 
                             foreach (string subSubSubKey in subSubKeyOpened.GetSubKeyNames())
                             {
@@ -86,7 +88,7 @@ namespace WindowsRegistryApp
 
                                 RegistryKey subSubSubKeyOpened = subSubKeyOpened.OpenSubKey(subSubSubKey);
 
-                                registries.Add(subSubSubKeyOpened);
+                                regKeysList.Add(subSubSubKeyOpened);
 
                                 /*
                                 foreach (string subSubSubSubKey in subSubSubKeyOpened.GetSubKeyNames())
@@ -160,25 +162,33 @@ namespace WindowsRegistryApp
             // showing name, type and value of selected key
 
             listView_regParData.Items.Clear();
-            String parName;
-            RegistryKey currentRegKey = GetRegistryKeyByName(treeView_registryKeys.SelectedNode.Text, regKeysList);
+            RegistryValueKind parType;
+            object parValue;
+            String parValueString;
+
+            RegistryKey currentRegKey = Reg.GetRegistryKeyByName(treeView_registryKeys.SelectedNode.Text, regKeysList);
 
             if (currentRegKey != null)
             {
                 try
                 {
-                    foreach (string valueName in currentRegKey.GetValueNames())
+                    foreach (string parName in currentRegKey.GetValueNames().OrderBy(x => x))
                     {
-                        if (valueName == null || valueName == "")
+                        /*if (*//*valueName == null ||*//* valueName == "")
                         {
                             parName = "Default";
                         }
                         else
                         {
                             parName = valueName;
-                        }
+                        }*/
 
-                        var parData = new string[] { parName, currentRegKey.GetValueKind(valueName).ToString(), currentRegKey.GetValue(valueName).ToString() };
+                        parValue = currentRegKey.GetValue(parName);
+                        parType = currentRegKey.GetValueKind(parName);
+
+                        parValueString = (parType == RegistryValueKind.DWord) ? $"0x{((int)parValue).ToString("X2").ToLower().PadLeft(8, '0')} ({(uint)(int)parValue})" : parValue.ToString();
+
+                        var parData = new string[] { parName, ((RegistryValueKindNative)parType).ToString(), parValueString};
 
                         var lvi = new ListViewItem(parData);
                         listView_regParData.Items.Add(lvi);
@@ -189,17 +199,33 @@ namespace WindowsRegistryApp
 
         }
 
-        public RegistryKey GetRegistryKeyByName(string regKeyName, ArrayList regKeysList)
+        private void разделToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            foreach (RegistryKey rk in regKeysList)
-            {
-                if (rk.ToString().Contains(regKeyName))
-                {
-                    return rk;
-                }
-            }
 
-            return null;
         }
+
+        /*private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
+        {
+
+        }*/
+
+        /*private void textBox_path_TextChanged(object sender, EventArgs e)
+        {
+
+        }*/
+
+        /*private void textBox_path_KeyPress(object sender, EventArgs e)
+        {
+            string new_path = textBox_path.Text;
+
+            string[] new_path_arr = new string[10];
+
+            new_path_arr = new_path.Split('\\');
+
+            foreach (string str in new_path_arr)
+            {
+                MessageBox.Show(str);
+            }
+        }*/
     }
 }
