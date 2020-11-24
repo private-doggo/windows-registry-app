@@ -208,22 +208,28 @@ namespace WindowsRegistryApp
 
         private void sectionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RegistryKey currentRegKey = Reg.GetRegistryKeyByName(treeView_registryKeys.SelectedNode.Text, regKeysList);
+            TreeNode selectedNode = treeView_registryKeys.SelectedNode;
+
+            RegistryKey currentRegKey = Reg.GetRegistryKeyByName(selectedNode.Text, regKeysList);
 
             if (currentRegKey != null)
             {
                 sectionCreationForm sectionCreation = new sectionCreationForm();
 
                 sectionCreation.ShowDialog();
+
                 try
                 {
                     RegistryKey newRegKey = currentRegKey.CreateSubKey(Data.newRegKeyName);
+
+                    selectedNode.Nodes.Add(Data.newRegKeyName);
                 }
                 catch
                 {
                     MessageBox.Show("Can't be proceed");
                 }
                 // добавить еще тип ключа (в виде дропбокса) и значение
+
             }
             else
             {
@@ -245,14 +251,16 @@ namespace WindowsRegistryApp
                 // удаление параметра
                 /*currentRegKey.DeleteValue("key1", false); // in case key doesn't exit an exeption won't appear
                 currentRegKey.Close();*/
-                RegistryKey currentRegKeyParent = Reg.GetRegistryKeyByName(treeView_registryKeys.SelectedNode.Parent.Text, regKeysList);
+                try
+                {
+                    RegistryKey currentRegKeyParent = Reg.GetRegistryKeyByName(treeView_registryKeys.SelectedNode.Parent.Text, regKeysList);
 
-                currentRegKey.Close();
-                currentRegKeyParent.DeleteSubKeyTree(treeView_registryKeys.SelectedNode.Text);
+                    currentRegKey.Close();
+                    currentRegKeyParent.DeleteSubKeyTree(treeView_registryKeys.SelectedNode.Text);
 
-                /*treeView_registryKeys.SelectedNode.Nodes.Clear();
-
-                treeView_registryKeys.SelectedNode = treeView_registryKeys.SelectedNode.Parent; */               
+                    treeView_registryKeys.Nodes.Remove(treeView_registryKeys.SelectedNode);
+                }
+                catch { }
             }
             else
             {
